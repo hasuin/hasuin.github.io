@@ -8,24 +8,8 @@
                 a.button.is-white.is-large(@click='openModal')
                     span 점수: {{ status.kill }}/{{ status.death }}
                     span.icon: i.fa.fa-question
-
+        hasuin-footer
         card-modal(:status='modalStatus', @close='closeModal')
-
-        footer.footer: .container
-            .content.has-text-centered
-                p: a.icon(href='https://github.com/hasuin/hasuin.github.io')
-                    i.fa.fa-github
-                p
-                    strong Hasuin
-                    | &nbsp;by&nbsp;
-                    a(href='http://chalk.pe') ChalkPE
-                    | .
-
-                p The source code is licensed under the&nbsp;
-                    a(href='http://opensource.org/licenses/mit-license.php') MIT License
-                    | .
-                p This website contains Hearthstone data that is copyright © Blizzard Entertainment.
-                p This website is not affiliated with Blizzard Entertainment.
 </template>
 
 <script>
@@ -38,6 +22,7 @@
 
     import Minion from './components/Minion.vue';
     import CardModal from './components/CardModal.vue';
+    import HasuinFooter from './layouts/HasuinFooter.vue';
 
     export default {
         name: 'app',
@@ -64,7 +49,7 @@
                 factory: null
             }
         },
-        components: { Minion, CardModal },
+        components: { Minion, CardModal, HasuinFooter },
 
         created(){
             init().then(db => {
@@ -96,7 +81,7 @@
                 this.modalStatus.show = true;
                 this.modalStatus.card = this.status.answer;
             },
-            
+
             closeModal(){
                 this.modalStatus.show = false;
             }
@@ -107,5 +92,15 @@
 <style scoped>
     * {
         font-family: 'Noto Sans Korean', sans-serif;
+    }
+
+    #app {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    section {
+        flex: 1 0 auto;
     }
 </style>
