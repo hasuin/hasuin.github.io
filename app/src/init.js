@@ -5,11 +5,11 @@ const db = low('db');
 
 export default function init(){
     return new Promise((resolve, reject) => {
-        if(hasData()) resolve(db);
-        else fetch()
-            .then(data => db
-                .set('stats', data.stats)
-                .set('minions', data.minions)
+        if(hasData()) return resolve(db);
+
+        fetch()
+            .then(minions => db
+                .set('minions', minions)
                 .set('update', Date.now()).write())
             .then(() => resolve(db))
             .catch(err => reject(err));
@@ -17,6 +17,6 @@ export default function init(){
 }
 
 function hasData(){
-    return ['update', 'minions', 'stats'].every(name => db.has(name).value())
-        && Math.abs(Date.now() - parseInt(db.get('update').value())) < 604800000; //7d
+    return db.has('update').value() &&
+        Math.abs(Date.now() - db.get('update').value()) < 604800000; //7d
 }

@@ -1,7 +1,7 @@
 <template lang="pug">
     #app
         section.section: .container
-            h1.title.is-2.has-text-centered {{ status.answer.attack }}/{{ status.answer.health }} 하수인
+            h1.title.is-2.has-text-centered {{ question }}
             .columns.is-multiline
                 minion(v-for='minion in minions', :minion='minion', :status='status', :key='minion.id', @choose='choose(minion)')
             .has-text-centered
@@ -39,8 +39,12 @@
 
                 status: {
                     kill: 0, death: 0,
-                    chosen: false, correct: false,
-                    answer: { attack: 0, health: 0 }
+
+                    question: () => 'Hasuin',
+                    explain: () => '......!',
+
+                    answer: null, chosen: false, correct: false,
+
                 },
 
                 modalStatus: {
@@ -48,6 +52,12 @@
                 },
 
                 factory: null
+            }
+        },
+
+        computed: {
+            question(){
+                return this.status.question(this.status.answer);
             }
         },
 
@@ -66,11 +76,14 @@
 
         methods: {
             update(){
-                let problem = this.factory();
-                this.minions = problem.minions;
+                let product = this.factory();
+
+                this.minions = product.minions;
+                this.status.question = product.question;
+                this.status.explain = product.explain;
 
                 this.status.chosen = false;
-                this.status.answer = problem.answer;
+                this.status.answer = this.minions[Math.floor(Math.random() * this.minions.length)];
             },
 
             choose(chosen){
@@ -84,6 +97,7 @@
 
             openModal(){
                 if(!this.status.chosen) return;
+
                 this.modalStatus.show = true;
                 this.modalStatus.card = this.status.answer;
             },

@@ -1,7 +1,7 @@
 <template lang="pug">
     .column
         a.button.is-medium.is-fullwidth(@click='choose', :class='color + " " + state') {{ minion.name }}
-            span(v-if='status.chosen') &nbsp;{{ minion.attack }}/{{ minion.health }}
+            span(v-if='status.chosen') &nbsp;- {{ explaination }}
 </template>
 
 <script>
@@ -17,6 +17,10 @@
                 return !this.status.chosen ? 'is-outlined' :
                     this.status.answer === this.minion ? '' :
                     this.status.chosen === this.minion ? 'is-disabled' : 'is-outlined';
+            },
+
+            explaination(){
+                return this.status.explain(this.minion);
             }
         },
 
