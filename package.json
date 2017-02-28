@@ -41,6 +41,7 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "bulma": "^0.3.1",
+    "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
     "lowdb": "^0.15.5",
     "noto-sans-kr": "^0.1.1",
