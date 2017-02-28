@@ -8,7 +8,7 @@
                 a.button.is-white.is-large(@click='openModal')
                     span 점수: {{ status.kill }}/{{ status.death }}
                     span.icon: i.fa.fa-question
-        hasuin-footer
+        hasuin-footer(:status='status')
         card-modal(:status='modalStatus', @close='closeModal')
 </template>
 
@@ -36,6 +36,7 @@
                     attack: 0, health: 0,
                     name: '카드 정보를 가져오는 중입니다'
                 }],
+
                 status: {
                     kill: 0, death: 0,
                     chosen: false, correct: false,
@@ -49,7 +50,12 @@
                 factory: null
             }
         },
-        components: { Minion, CardModal, HasuinFooter },
+
+        components: {
+            Minion,
+            CardModal,
+            HasuinFooter
+        },
 
         created(){
             init().then(db => {
